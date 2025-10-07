@@ -32,6 +32,14 @@ body {
   overflow-x: clip;
 }
 
+/* Smooth in-page anchor scrolling */
+html { scroll-behavior: smooth; }
+
+/* Keep anchored sections clear of sticky header */
+:where(section, #about, #events, #trending, #zero-proof, #menu, #rechner, #faq, #kontakt) {
+  scroll-margin-top: 90px;
+}
+
 header {
   position: sticky;
   top: 0;
