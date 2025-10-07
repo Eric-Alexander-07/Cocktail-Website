@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
@@ -66,44 +66,9 @@
       height: 40px;
       width: auto;
       display: block;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
       border-radius: 6px;
-    }
-
-    .logo-symbol {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.35rem;
-    }
-
-    .fly {
-      width: 0.6rem;
-      height: 1.1rem;
-      border-radius: 40% 40% 50% 50%;
-      background: linear-gradient(135deg, var(--accent), #ffce73);
-      position: relative;
-      box-shadow: 0 0 12px rgba(255, 157, 46, 0.6);
-    }
-
-    .fly::before,
-    .fly::after {
-      content: '';
-      position: absolute;
-      width: 0.75rem;
-      height: 0.4rem;
-      background: rgba(255, 255, 255, 0.75);
-      border-radius: 50%;
-      top: -0.15rem;
-    }
-
-    .fly::before {
-      left: -0.5rem;
-      transform: rotate(-15deg);
-    }
-
-    .fly::after {
-      right: -0.5rem;
-      transform: rotate(15deg);
+      animation: floaty 6s ease-in-out infinite;
     }
 
     .cta-button {
@@ -115,12 +80,23 @@
       font-weight: 600;
       transition: 0.3s ease;
       background: linear-gradient(120deg, rgba(255, 157, 46, 0.1), rgba(255, 157, 46, 0));
+      position: relative;
+      overflow: hidden;
     }
 
     .cta-button:hover {
       background: var(--accent);
       color: #030305;
       box-shadow: 0 18px 35px rgba(255, 157, 46, 0.35);
+    }
+
+    .cta-shimmer::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.4) 50%, transparent 80%);
+      transform: translateX(-120%);
+      animation: shimmer 4.5s ease-in-out infinite;
     }
 
     main {
@@ -139,6 +115,20 @@
       gap: 3rem;
       padding-top: 4rem;
       align-items: center;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: -30% -40%;
+      background: radial-gradient(circle at top right, rgba(255, 157, 46, 0.35), transparent 60%);
+      opacity: 0.35;
+      transform: translateY(calc(var(--parallax, 0) * 0.6px));
+      transition: transform 0.15s ease-out;
+      pointer-events: none;
+      z-index: -1;
     }
 
     .hero h1 {
@@ -171,6 +161,7 @@
       inset: 0;
       background: radial-gradient(circle at top right, rgba(255, 157, 46, 0.35), transparent 60%);
       mix-blend-mode: screen;
+      pointer-events: none;
     }
 
     .badge {
@@ -244,6 +235,45 @@
       line-height: 1.6;
     }
 
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .about-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    .about-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-card p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .media {
+      width: 100%;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      object-fit: cover;
+    }
+
+    .gallery-grid {
+      margin-top: 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
     .cocktail-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -258,7 +288,12 @@
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      transition: transform 0.3s ease, border 0.3s ease;
+      transition: transform 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cocktail-card.is-open {
+      border-color: rgba(255, 157, 46, 0.6);
+      box-shadow: 0 18px 35px rgba(255, 157, 46, 0.18);
     }
 
     .cocktail-card:hover {
@@ -271,7 +306,7 @@
       font-weight: 600;
     }
 
-    .cocktail-card p {
+    .cocktail-note {
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.5;
@@ -287,6 +322,52 @@
       font-weight: 600;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+    }
+
+    .ingredient-toggle {
+      align-self: start;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.2s ease, border 0.2s ease;
+    }
+
+    .ingredient-toggle:hover,
+    .ingredient-toggle:focus-visible {
+      background: rgba(255, 157, 46, 0.15);
+      border-color: rgba(255, 157, 46, 0.6);
+      outline: none;
+    }
+
+    .ingredients {
+      list-style: none;
+      margin-top: 0.35rem;
+      color: var(--text-muted);
+      display: grid;
+      gap: 0.35rem;
+      padding-left: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .ingredients li {
+      position: relative;
+      padding-left: 1rem;
+    }
+
+    .ingredients li::before {
+      content: '\2022';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .ingredients[hidden] {
+      display: none;
     }
 
     .menu-list {
@@ -343,13 +424,18 @@
     }
 
     select,
+    input,
+    button {
+      font-family: inherit;
+    }
+
+    select,
     input {
       background: rgba(7, 9, 13, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 0.75rem;
       padding: 0.75rem 1rem;
       color: var(--text-primary);
-      font-family: inherit;
     }
 
     input:focus,
@@ -416,6 +502,46 @@
       font-size: 0.85rem;
     }
 
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .hover-tilt {
+      will-change: transform;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    @keyframes floaty {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-2px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-120%);
+      }
+      50% {
+        transform: translateX(120%);
+      }
+      100% {
+        transform: translateX(120%);
+      }
+    }
+
     @media (max-width: 640px) {
       nav {
         padding: 1.2rem;
@@ -428,56 +554,12 @@
       .hero {
         padding-top: 2rem;
       }
+
+      .section-heading {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
-    /* About & Gallery */
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .about-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-    }
-
-    .about-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      margin-bottom: .5rem;
-    }
-
-    .about-card p { color: var(--text-muted); line-height: 1.6; }
-
-    .media { width: 100%; border-radius: 1rem; border: 1px solid rgba(255,255,255,.07); }
-
-    .gallery-grid {
-      margin-top: 1.25rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-
-    /* FAQ */
-    .faq details {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 1rem;
-      padding: 1rem 1.25rem;
-      margin-bottom: .75rem;
-    }
-
-    .faq summary {
-      cursor: pointer;
-      font-weight: 600;
-      list-style: none;
-    }
-
-    .faq summary::-webkit-details-marker { display: none; }
-    .faq p { color: var(--text-muted); margin-top: .5rem; }
   </style>
 </head>
 <body>
@@ -487,52 +569,52 @@
         <img class="logo-img" src="assets/img/logo.png" alt="Three Flies Cocktail Collective Logo" />
         <span>Three Flies Cocktail Collective</span>
       </div>
-      <a class="cta-button" href="#kontakt">Anfrage starten</a>
+      <a class="cta-button cta-shimmer" href="#kontakt">Anfrage starten</a>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <div>
-        <div class="badge"><span></span>Mobile Cocktailkultur auf höchstem Niveau</div>
-        <h1>Euer Boutique-Barteam für Partys, Pop-Ups & Corporate Events</h1>
+    <section class="hero" id="hero">
+      <div class="reveal">
+        <div class="badge"><span></span>Mobile Cocktailkultur auf h&ouml;chstem Niveau</div>
+        <h1>Euer Boutique-Barteam f&uuml;r Partys, Pop-Ups &amp; Corporate Events</h1>
         <p>
-          Wir bringen einen Hauch von Golden-Age-Glanz und handgemixte Signature Drinks zu euren Gästen. Von der Konzeption bis zum letzten Glas schaffen wir ein Erlebnis, das in Erinnerung bleibt.
+          Wir bringen einen Hauch von Golden-Age-Glanz und handgemixte Signature Drinks zu euren G&auml;sten. Von der Konzeption bis zum letzten Glas schaffen wir ein Erlebnis, das in Erinnerung bleibt.
         </p>
-        <a class="cta-button" href="#menu">Zu unseren Drinks</a>
+        <a class="cta-button cta-shimmer" href="#menu">Zu unseren Drinks</a>
       </div>
-      <article class="hero-card" aria-label="Über Three Flies">
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem;">Three Flies – Cocktails mit Charakter</h2>
+      <article class="hero-card reveal" aria-label="&Uuml;ber Three Flies">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem;">Three Flies &ndash; Cocktails mit Charakter</h2>
         <p>
-          Wir sind drei Freund:innen mit Liebe zu maßgeschneiderten Cocktailkonzepten. Inspiriert von unseren ikonischen Fliegen, kombinieren wir elegante Präsentation mit einem Augenzwinkern.
+          Wir sind drei Freund:innen mit Liebe zu ma&szlig;geschneiderten Cocktailkonzepten. Inspiriert von unseren ikonischen Fliegen, kombinieren wir elegante Pr&auml;sentation mit einem Augenzwinkern.
         </p>
         <div class="highlights">
           <div class="highlight-card">
             <h3>Premium Zutaten</h3>
-            <p>Hausgemachte Infusionen, saisonale Botanicals und ausgewählte Spirituosen.</p>
+            <p>Hausgemachte Infusionen, saisonale Botanicals und ausgew&auml;hlte Spirituosen.</p>
           </div>
           <div class="highlight-card">
             <h3>Full-Service</h3>
-            <p>Setup, Personal, Glasware – ihr entspannt euch, wir kümmern uns um den Rest.</p>
+            <p>Setup, Personal, Glasware &ndash; ihr entspannt euch, wir k&uuml;mmern uns um den Rest.</p>
           </div>
           <div class="highlight-card">
             <h3>Signature Erlebnis</h3>
-            <p>Individuelle Menüs und Storytelling für Marken, Hochzeiten und private Feiern.</p>
+            <p>Individuelle Men&uuml;s und Storytelling f&uuml;r Marken, Hochzeiten und private Feiern.</p>
           </div>
         </div>
       </article>
     </section>
 
-    <section id="about">
+    <section id="about" class="reveal">
       <div class="section-heading">
-        <h2>Über uns</h2>
-        <p>Wir sind ein junges, eingespieltes Cocktail-Kollektiv. Mit Sinn für Details, hochwertigen Zutaten und einem freundlichen Auftreten gestalten wir Barerlebnisse, die im Gedächtnis bleiben.</p>
+        <h2>&Uuml;ber uns</h2>
+        <p>Wir sind ein junges, eingespieltes Cocktail-Kollektiv aus <strong>Obernburg am Main</strong> und agieren im <strong>Kreis Aschaffenburg/Miltenberg</strong>. Mit Sinn f&uuml;r Details, hochwertigen Zutaten und einem freundlichen Auftreten gestalten wir Barerlebnisse, die im Ged&auml;chtnis bleiben.</p>
       </div>
       <div class="about-grid">
         <article class="about-card">
-          <h3>Handwerk & Gastfreundschaft</h3>
-          <p>Ob private Feier, Hochzeit oder Firmenevent – wir bringen eine stilvolle mobile Bar, durchdachte Abläufe und Signature-Drinks mit. Von der Planung bis zum letzten Glas kümmern wir uns darum, dass ihr euch entspannt zurücklehnen könnt.</p>
-          <p style="margin-top:.75rem;">Auf Wunsch entwickeln wir individuelle Menüs, passende Gläser und Garnishes – immer mit Fokus auf Qualität und Atmosphäre.</p>
+          <h3>Handwerk &amp; Gastfreundschaft</h3>
+          <p>Ob private Feier, Hochzeit oder Firmenevent &ndash; wir bringen eine stilvolle mobile Bar, durchdachte Abl&auml;ufe und Signature-Drinks mit. Von der Planung bis zum letzten Glas k&uuml;mmern wir uns darum, dass ihr euch entspannt zur&uuml;cklehnen k&ouml;nnt.</p>
+          <p style="margin-top: 0.75rem;">Auf Wunsch entwickeln wir individuelle Men&uuml;s, passende Gl&auml;ser und Garnishes &ndash; immer mit Fokus auf Qualit&auml;t und Atmosph&auml;re.</p>
         </article>
         <figure>
           <img class="media" src="assets/img/team.jpg" alt="Unser Barteam bei einem Abend-Event" />
@@ -540,89 +622,168 @@
       </div>
 
       <div class="gallery-grid" aria-label="Impressionen">
-        <img class="media" src="assets/img/bar.jpg" alt="Barkeeper an der mobilen Bar mit Drink" />
-        <img class="media" src="assets/img/logo.png" alt="Drei Teammitglieder in eleganter Kleidung" />
+        <img class="media reveal" src="assets/img/bar.jpg" alt="Barkeeper an der mobilen Bar mit Drink" />
+        <img class="media reveal" src="assets/img/team2.jpg" alt="Drei Teammitglieder in eleganter Kleidung" />
       </div>
     </section>
 
-    <section id="trending">
+    <section id="trending" class="reveal">
       <div class="section-heading">
         <h2>Aktuell angesagte Cocktails</h2>
         <p>
-          Wir kuratieren kontinuierlich Drinks, die eure Gäste begeistern – von neu interpretierten Klassikern bis zu progressiven Kreationen mit lokalen Zutaten.
+          Wir kuratieren kontinuierlich Drinks, die eure G&auml;ste begeistern &ndash; von neu interpretierten Klassikern bis zu progressiven Kreationen mit lokalen Zutaten.
         </p>
       </div>
       <div class="cocktail-grid">
-        <article class="cocktail-card">
+        <article class="cocktail-card hover-tilt">
           <span class="tag">Signature</span>
           <h3>Fly High Martini</h3>
-          <p>Gin, weißer Vermouth, Birnenbrand, Honig-Nori-Sirup. Garniert mit einer kandierten Fliege aus Zitruszeste.</p>
+          <p class="cocktail-note">Dry Martini mit Birnenakzent und salzig-s&uuml;&szlig;em Finish.</p>
+          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+          <ul class="ingredients" hidden>
+            <li>Gin</li>
+            <li>Wei&szlig;er Vermouth</li>
+            <li>Birnenbrand</li>
+            <li>Honig-Nori-Sirup</li>
+            <li>Zitruszeste</li>
+          </ul>
         </article>
-        <article class="cocktail-card">
+        <article class="cocktail-card hover-tilt">
           <span class="tag">Trend</span>
           <h3>Smoked Yuzu Paloma</h3>
-          <p>Mezcal, Grapefruit, Yuzu-Soda & Salzschaum. Rauchnote live am Tisch inszeniert.</p>
+          <p class="cocktail-note">Rauchiger Mezcal, frische Yuzu und Grapefruit mit Salzschaum.</p>
+          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+          <ul class="ingredients" hidden>
+            <li>Mezcal</li>
+            <li>Grapefruitsaft</li>
+            <li>Yuzu-Sirup</li>
+            <li>Yuzu-Soda</li>
+            <li>Salzschaum</li>
+          </ul>
         </article>
-        <article class="cocktail-card">
+        <article class="cocktail-card hover-tilt">
           <span class="tag">Low ABV</span>
           <h3>Verjus Spritz</h3>
-          <p>Verjus, Riesling-Reduktion, Rosmarin, Mineralwasser. Spritzig, leicht und anspruchsvoll.</p>
+          <p class="cocktail-note">Leicht, spritzig und elegant mit Riesling-Noten.</p>
+          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+          <ul class="ingredients" hidden>
+            <li>Verjus</li>
+            <li>Riesling-Reduktion</li>
+            <li>Rosmarin</li>
+            <li>Mineralwasser</li>
+          </ul>
         </article>
-        <article class="cocktail-card">
+        <article class="cocktail-card hover-tilt">
           <span class="tag">Zero Proof</span>
           <h3>Garden Club</h3>
-          <p>Gurkendestillat, Zitronenverbene, Limette, Tonic und ein Hauch Matcha.</p>
+          <p class="cocktail-note">Gr&uuml;ne Frische mit Matcha und Zitronenverbene.</p>
+          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+          <ul class="ingredients" hidden>
+            <li>Gurkendestillat</li>
+            <li>Zitronenverbene</li>
+            <li>Limette</li>
+            <li>Matcha Tonic</li>
+          </ul>
         </article>
       </div>
     </section>
 
-    <section id="menu">
+    <section id="zero-proof" class="reveal">
+      <div class="section-heading">
+        <h2>Alkoholfreie Cocktails</h2>
+        <p>Vollwertige Drinks ohne Alkohol &ndash; aromatisch, ausgewogen und ebenso liebevoll pr&auml;sentiert.</p>
+      </div>
+      <div class="cocktail-grid">
+        <article class="cocktail-card hover-tilt">
+          <span class="tag">Zero Proof</span>
+          <h3>Paloma Verde</h3>
+          <p class="cocktail-note">Grapefruit und Limette treffen auf herb-s&uuml;&szlig;en Shrub.</p>
+          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+          <ul class="ingredients" hidden>
+            <li>Grapefruit</li>
+            <li>Limette</li>
+            <li>Rosmarin</li>
+            <li>Cranberry-Shrub</li>
+            <li>Soda</li>
+          </ul>
+        </article>
+        <article class="cocktail-card hover-tilt">
+          <span class="tag">Zero Proof</span>
+          <h3>Lavender Collins</h3>
+          <p class="cocktail-note">Florale Leichtigkeit mit Lavendel und Gurkenfrische.</p>
+          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+          <ul class="ingredients" hidden>
+            <li>Zitronensaft</li>
+            <li>Lavendelsirup</li>
+            <li>Alkoholfreies Gurkendestillat</li>
+            <li>Soda</li>
+          </ul>
+        </article>
+        <article class="cocktail-card hover-tilt">
+          <span class="tag">Zero Proof</span>
+          <h3>Garden Fizz</h3>
+          <p class="cocktail-note">Spritziger Apfel-Verjus mit Ingwer und Basilikum.</p>
+          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+          <ul class="ingredients" hidden>
+            <li>Apfel-Verjus</li>
+            <li>Ingwer</li>
+            <li>Basilikum</li>
+            <li>Sprudel</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="menu" class="reveal">
       <div class="section-heading">
         <h2>Unsere Auswahl</h2>
         <p>
-          Stellt euch euer Wunschmenü zusammen – kombiniert Klassiker, Crowd-Pleaser und unsere eigenen Kompositionen. Wir passen jede Karte an euren Anlass an.
+          Stellt euch euer Wunschmen&uuml; zusammen &ndash; kombiniert Klassiker, Crowd-Pleaser und unsere eigenen Kompositionen. Wir passen jede Karte an euren Anlass an.
         </p>
       </div>
       <div class="menu-list">
         <article class="menu-item">
           <h3>Classics Reimagined</h3>
           <p>Negroni Bianco, Old Fashioned mit Kakao-Bitters, French 75 mit Bergamotte.</p>
-          <span>Perfekt für: elegante Abende & Dinner-Partys</span>
+          <span>Perfekt f&uuml;r: elegante Abende &amp; Dinner-Partys</span>
         </article>
         <article class="menu-item">
           <h3>Playful Crowd Pleasers</h3>
           <p>Passionfruit Mule, Kokos-Colada on Ice, Espresso-Tonic.</p>
-          <span>Perfekt für: Geburtstage & Sommerfeste</span>
+          <span>Perfekt f&uuml;r: Geburtstage &amp; Sommerfeste</span>
         </article>
         <article class="menu-item">
           <h3>Zero Proof Collection</h3>
           <p>Paloma Verde, Lavender Collins, Cranberry Shrub Spritz.</p>
-          <span>Perfekt für: gemischte Gästelisten & Daytime Events</span>
+          <span>Perfekt f&uuml;r: gemischte G&auml;stelisten &amp; Daytime Events</span>
         </article>
         <article class="menu-item">
           <h3>Bespoke Experience</h3>
           <p>Wir entwickeln eine eigene Signature-Story inklusive Glasdesign, Garnish und Bar-Setup.</p>
-          <span>Perfekt für: Markenaktivierungen & Hochzeiten</span>
+          <span>Perfekt f&uuml;r: Markenaktivierungen &amp; Hochzeiten</span>
         </article>
       </div>
     </section>
 
-    <section id="rechner">
+    <section id="rechner" class="reveal">
       <div class="section-heading">
         <h2>Zutatenrechner</h2>
         <p>
-          Plant eure Veranstaltung mit Leichtigkeit: Wählt einen Drink und gebt die Anzahl der Drinks an. Unser Rechner zeigt euch die benötigten Zutatenmengen.
+          Plant eure Veranstaltung mit Leichtigkeit: W&auml;hlt einen Drink und gebt die Anzahl der Drinks an. Unser Rechner zeigt euch die ben&ouml;tigten Zutatenmengen.
         </p>
       </div>
       <div class="calculator">
         <form id="calculator-form">
           <label>
-            Cocktail auswählen
-            <select id="cocktail-select" aria-label="Cocktail auswählen">
+            Cocktail ausw&auml;hlen
+            <select id="cocktail-select" aria-label="Cocktail ausw&auml;hlen">
               <option value="fly-high-martini">Fly High Martini</option>
               <option value="smoked-yuzu-paloma">Smoked Yuzu Paloma</option>
               <option value="verjus-spritz">Verjus Spritz</option>
               <option value="garden-club">Garden Club</option>
+              <option value="paloma-verde">Paloma Verde</option>
+              <option value="lavender-collins">Lavender Collins</option>
+              <option value="garden-fizz">Garden Fizz</option>
             </select>
           </label>
           <label>
@@ -632,54 +793,54 @@
           <button type="submit" class="cta-button" style="justify-self: start;">Berechnen</button>
         </form>
         <div class="results" aria-live="polite">
-          <h3>Benötigte Zutaten</h3>
+          <h3>Ben&ouml;tigte Zutaten</h3>
           <ul id="results-list">
-            <li>Wählt oben einen Cocktail und klickt auf „Berechnen“.</li>
+            <li>W&auml;hlt oben einen Cocktail und klickt auf &bdquo;Berechnen&ldquo;.</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="faq" class="faq">
+    <section id="faq" class="faq reveal">
       <div class="section-heading">
-        <h2>Häufig gestellte Fragen</h2>
-        <p>Ein paar schnelle Antworten. Wenn noch etwas offen ist, meldet euch jederzeit – wir beraten gern.</p>
+        <h2>H&auml;ufig gestellte Fragen</h2>
+        <p>Ein paar schnelle Antworten. Wenn noch etwas offen ist, meldet euch jederzeit &ndash; wir beraten gern.</p>
       </div>
       <details>
         <summary>Welche Leistungen bringt ihr mit?</summary>
-        <p>Bar-Setup, professionelle Ausstattung, Eis, Glasware, Zutaten und Personal. Optional übernehmen wir auch Konzepterstellung, Deko und passende Musikempfehlungen.</p>
+        <p>Bar-Setup, professionelle Ausstattung, Eis, Glasware, Zutaten und Personal. Optional &uuml;bernehmen wir auch Konzepterstellung, Deko und passende Musikempfehlungen.</p>
       </details>
       <details>
-        <summary>Könnt ihr alkoholfreie Optionen anbieten?</summary>
-        <p>Ja, wir haben eine Zero‑Proof‑Auswahl mit eigenständigen, aromatischen Drinks – nicht nur „ohne Alkohol“, sondern mit Charakter.</p>
+        <summary>K&ouml;nnt ihr alkoholfreie Optionen anbieten?</summary>
+        <p>Ja, wir haben eine Zero-Proof-Auswahl mit eigenst&auml;ndigen, aromatischen Drinks &ndash; nicht nur &bdquo;ohne Alkohol&ldquo;, sondern mit Charakter.</p>
       </details>
       <details>
         <summary>Wie kalkuliert ihr die Mengen?</summary>
-        <p>Über unseren Zutatenrechner könnt ihr vorab planen. Erfahrungsgemäß rechnen wir mit 3–5 Drinks pro Person, je nach Eventdauer.</p>
+        <p>Unser Rechner gibt erste Richtwerte. Erfahrungsgem&auml;&szlig; planen wir mit drei bis f&uuml;nf Drinks pro Person, je nach Eventdauer.</p>
       </details>
       <details>
         <summary>In welchem Gebiet seid ihr unterwegs?</summary>
-        <p>Wir kommen aus der Region und sind mobil. Teilt uns Datum, Ort und Gästezahl mit – wir prüfen Verfügbarkeit und erstellen ein Angebot.</p>
+        <p>Wir kommen aus Obernburg am Main und sind mobil im Kreis Aschaffenburg/Miltenberg unterwegs. Teilt uns Datum, Ort und G&auml;stezahl mit &ndash; wir pr&uuml;fen Verf&uuml;gbarkeit und erstellen ein Angebot.</p>
       </details>
     </section>
 
-    <section id="kontakt" aria-label="Kontakt">
+    <section id="kontakt" aria-label="Kontakt" class="reveal">
       <div class="contact">
-        <h3>Lasst uns gemeinsam anstoßen</h3>
+        <h3>Lasst uns gemeinsam ansto&szlig;en</h3>
         <p>
-          Erzählt uns von eurer Veranstaltung, wir melden uns mit einem maßgeschneiderten Angebot. Auf Wunsch unterstützen wir auch bei Mobiliar, DJs und Konzeptentwicklung.
+          Erz&auml;hlt uns von eurer Veranstaltung, wir melden uns mit einem ma&szlig;geschneiderten Angebot. Auf Wunsch unterst&uuml;tzen wir auch bei Mobiliar, DJs und Konzeptentwicklung.
         </p>
         <p>
           <strong>E-Mail:</strong> <a href="mailto:cheers@threeflies.bar">cheers@threeflies.bar</a><br />
           <strong>Telefon:</strong> <a href="tel:+491741234567">+49 174 1234567</a>
         </p>
-        <a class="cta-button" href="mailto:cheers@threeflies.bar">Jetzt anfragen</a>
+        <a class="cta-button cta-shimmer" href="mailto:cheers@threeflies.bar">Jetzt anfragen</a>
       </div>
     </section>
   </main>
 
   <footer>
-    © 2024 Three Flies Cocktail Collective – Crafted in Berlin mit Liebe & Liquid Artistry.
+    &copy; 2024 Three Flies Cocktail Collective &ndash; Crafted in Berlin mit Liebe &amp; Liquid Artistry.
   </footer>
 
   <script>
@@ -688,7 +849,7 @@
         name: 'Fly High Martini',
         ingredients: {
           'Gin': 40,
-          'Weißer Vermouth': 15,
+          'Wei&szlig;er Vermouth': 15,
           'Birnenbrand': 10,
           'Honig-Nori-Sirup': 10
         }
@@ -699,7 +860,7 @@
           'Mezcal': 35,
           'Grapefruitsaft': 50,
           'Yuzu-Sirup': 20,
-          'Soda': 70
+          'Yuzu-Soda': 70
         }
       },
       'verjus-spritz': {
@@ -715,9 +876,37 @@
         name: 'Garden Club',
         ingredients: {
           'Gurkendestillat': 40,
-          'Limettensaft': 20,
-          'Zitronenverbene-Tee': 30,
+          'Zitronenverbene': 25,
+          'Limette': 20,
           'Matcha Tonic': 90
+        }
+      },
+      'paloma-verde': {
+        name: 'Paloma Verde',
+        ingredients: {
+          'Grapefruit': 60,
+          'Limette': 20,
+          'Rosmarinsirup': 15,
+          'Cranberry-Shrub': 25,
+          'Soda': 80
+        }
+      },
+      'lavender-collins': {
+        name: 'Lavender Collins',
+        ingredients: {
+          'Zitronensaft': 25,
+          'Lavendelsirup': 20,
+          'Gurkendestillat alkoholfrei': 40,
+          'Soda': 90
+        }
+      },
+      'garden-fizz': {
+        name: 'Garden Fizz',
+        ingredients: {
+          'Apfel-Verjus': 50,
+          'Ingwer': 15,
+          'Basilikumsirup': 15,
+          'Sprudel': 90
         }
       }
     };
@@ -732,8 +921,8 @@
       const recipe = recipes[select.value];
       const servings = parseInt(countInput.value, 10);
 
-      if (!recipe || isNaN(servings) || servings < 1) {
-        resultsList.innerHTML = '<li>Bitte gebt eine gültige Anzahl an Drinks ein.</li>';
+      if (!recipe || Number.isNaN(servings) || servings < 1) {
+        resultsList.innerHTML = '<li>Bitte gebt eine g&uuml;ltige Anzahl an Drinks ein.</li>';
         return;
       }
 
@@ -747,6 +936,75 @@
 
       resultsList.innerHTML = ingredientsHtml;
     });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach((el) => io.observe(el));
+
+    // Subtle card tilt
+    const tiltEls = document.querySelectorAll('.hover-tilt');
+    tiltEls.forEach((el) => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const rx = ((y / rect.height) - 0.5) * -6;
+        const ry = ((x / rect.width) - 0.5) * 6;
+        el.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+      });
+    });
+
+    // Ingredient toggles
+    const toggleButtons = document.querySelectorAll('.ingredient-toggle');
+    toggleButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const list = button.nextElementSibling;
+        if (!list) return;
+        const expanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!expanded));
+        button.textContent = expanded ? 'Zutaten anzeigen' : 'Zutaten verbergen';
+        if (expanded) {
+          list.setAttribute('hidden', '');
+        } else {
+          list.removeAttribute('hidden');
+        }
+        const card = button.closest('.cocktail-card');
+        if (card) {
+          card.classList.toggle('is-open', !expanded);
+        }
+      });
+    });
+
+    // Hero parallax
+    const heroSection = document.getElementById('hero');
+    let ticking = false;
+
+    const updateParallax = () => {
+      if (!heroSection) return;
+      const offset = window.scrollY * 0.08;
+      heroSection.style.setProperty('--parallax', offset.toFixed(2));
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    });
+
+    updateParallax();
   </script>
 </body>
 </html>
