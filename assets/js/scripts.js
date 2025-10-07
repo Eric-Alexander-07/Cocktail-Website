@@ -301,3 +301,12 @@ updateHeaderTone();
   });
 })();
 
+// Feedback marquee: duplicate content for seamless loop
+(() => {
+  const marquee = document.querySelector('#feedback [data-marquee]');
+  if (!marquee) return;
+  const clone = marquee.cloneNode(true);
+  clone.setAttribute('aria-hidden', 'true');
+  marquee.parentElement.appendChild(clone);
+})();
+
