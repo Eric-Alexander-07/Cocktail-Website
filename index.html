@@ -62,6 +62,14 @@
       font-size: 1rem;
     }
 
+    .logo-img {
+      height: 40px;
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.35));
+      border-radius: 6px;
+    }
+
     .logo-symbol {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -421,17 +429,62 @@
         padding-top: 2rem;
       }
     }
+    /* About & Gallery */
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .about-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    .about-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+    }
+
+    .about-card p { color: var(--text-muted); line-height: 1.6; }
+
+    .media { width: 100%; border-radius: 1rem; border: 1px solid rgba(255,255,255,.07); }
+
+    .gallery-grid {
+      margin-top: 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    /* FAQ */
+    .faq details {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 1rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: .75rem;
+    }
+
+    .faq summary {
+      cursor: pointer;
+      font-weight: 600;
+      list-style: none;
+    }
+
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq p { color: var(--text-muted); margin-top: .5rem; }
   </style>
 </head>
 <body>
   <header>
     <nav>
       <div class="logo" aria-label="Three Flies Cocktail Collective">
-        <div class="logo-symbol" aria-hidden="true">
-          <span class="fly"></span>
-          <span class="fly"></span>
-          <span class="fly"></span>
-        </div>
+        <img class="logo-img" src="assets/img/logo.png" alt="Three Flies Cocktail Collective Logo" />
         <span>Three Flies Cocktail Collective</span>
       </div>
       <a class="cta-button" href="#kontakt">Anfrage starten</a>
@@ -468,6 +521,28 @@
           </div>
         </div>
       </article>
+    </section>
+
+    <section id="about">
+      <div class="section-heading">
+        <h2>Über uns</h2>
+        <p>Wir sind ein junges, eingespieltes Cocktail-Kollektiv. Mit Sinn für Details, hochwertigen Zutaten und einem freundlichen Auftreten gestalten wir Barerlebnisse, die im Gedächtnis bleiben.</p>
+      </div>
+      <div class="about-grid">
+        <article class="about-card">
+          <h3>Handwerk & Gastfreundschaft</h3>
+          <p>Ob private Feier, Hochzeit oder Firmenevent – wir bringen eine stilvolle mobile Bar, durchdachte Abläufe und Signature-Drinks mit. Von der Planung bis zum letzten Glas kümmern wir uns darum, dass ihr euch entspannt zurücklehnen könnt.</p>
+          <p style="margin-top:.75rem;">Auf Wunsch entwickeln wir individuelle Menüs, passende Gläser und Garnishes – immer mit Fokus auf Qualität und Atmosphäre.</p>
+        </article>
+        <figure>
+          <img class="media" src="assets/img/team.jpg" alt="Unser Barteam bei einem Abend-Event" />
+        </figure>
+      </div>
+
+      <div class="gallery-grid" aria-label="Impressionen">
+        <img class="media" src="assets/img/bar.jpg" alt="Barkeeper an der mobilen Bar mit Drink" />
+        <img class="media" src="assets/img/logo.png" alt="Drei Teammitglieder in eleganter Kleidung" />
+      </div>
     </section>
 
     <section id="trending">
@@ -563,6 +638,29 @@
           </ul>
         </div>
       </div>
+    </section>
+
+    <section id="faq" class="faq">
+      <div class="section-heading">
+        <h2>Häufig gestellte Fragen</h2>
+        <p>Ein paar schnelle Antworten. Wenn noch etwas offen ist, meldet euch jederzeit – wir beraten gern.</p>
+      </div>
+      <details>
+        <summary>Welche Leistungen bringt ihr mit?</summary>
+        <p>Bar-Setup, professionelle Ausstattung, Eis, Glasware, Zutaten und Personal. Optional übernehmen wir auch Konzepterstellung, Deko und passende Musikempfehlungen.</p>
+      </details>
+      <details>
+        <summary>Könnt ihr alkoholfreie Optionen anbieten?</summary>
+        <p>Ja, wir haben eine Zero‑Proof‑Auswahl mit eigenständigen, aromatischen Drinks – nicht nur „ohne Alkohol“, sondern mit Charakter.</p>
+      </details>
+      <details>
+        <summary>Wie kalkuliert ihr die Mengen?</summary>
+        <p>Über unseren Zutatenrechner könnt ihr vorab planen. Erfahrungsgemäß rechnen wir mit 3–5 Drinks pro Person, je nach Eventdauer.</p>
+      </details>
+      <details>
+        <summary>In welchem Gebiet seid ihr unterwegs?</summary>
+        <p>Wir kommen aus der Region und sind mobil. Teilt uns Datum, Ort und Gästezahl mit – wir prüfen Verfügbarkeit und erstellen ein Angebot.</p>
+      </details>
     </section>
 
     <section id="kontakt" aria-label="Kontakt">
