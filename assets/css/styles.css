@@ -75,6 +75,8 @@ nav {
   text-transform: uppercase;
   color: var(--text-primary);
   font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .logo-img {

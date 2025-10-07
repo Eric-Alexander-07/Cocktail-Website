@@ -270,6 +270,20 @@ updateHeaderTone();
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lightbox.hidden) close(); });
 })();
 
+// Brand logo click → smooth scroll to page top
+(() => {
+  const brand = document.querySelector('nav .logo');
+  if (!brand) return;
+  const toTop = (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  brand.addEventListener('click', toTop);
+  brand.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') toTop(e);
+  });
+})();
+
 // Animated FAQ height for smoother open/close
 (() => {
   const detailsEls = document.querySelectorAll('.faq details');
