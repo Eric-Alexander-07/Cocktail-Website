@@ -1,70 +1,81 @@
-const recipes = {
-  'fly-high-martini': {
-    name: 'Fly High Martini',
+﻿const recipes = {
+  'whiskey-sour': {
+    name: 'Whiskey Sour',
     ingredients: {
-      'Gin': 40,
-      'Weißer Vermouth': 15,
-      'Birnenbrand': 10,
-      'Honig-Nori-Sirup': 10
-    }
-  },
-  'smoked-yuzu-paloma': {
-    name: 'Smoked Yuzu Paloma',
-    ingredients: {
-      'Mezcal': 35,
-      'Grapefruitsaft': 50,
-      'Yuzu-Sirup': 20,
-      'Yuzu-Soda': 70
-    }
-  },
-  'verjus-spritz': {
-    name: 'Verjus Spritz',
-    ingredients: {
-      'Verjus': 60,
-      'Riesling-Reduktion': 30,
-      'Rosmarinsirup': 15,
-      'Mineralwasser': 80
-    }
-  },
-  'garden-club': {
-    name: 'Garden Club',
-    ingredients: {
-      'Gurkendestillat': 40,
-      'Zitronenverbene': 25,
-      'Limette': 20,
-      'Matcha Tonic': 90
-    }
-  },
-  'paloma-verde': {
-    name: 'Paloma Verde',
-    ingredients: {
-      'Grapefruit': 60,
-      'Limette': 20,
-      'Rosmarinsirup': 15,
-      'Cranberry-Shrub': 25,
-      'Soda': 80
-    }
-  },
-  'lavender-collins': {
-    name: 'Lavender Collins',
-    ingredients: {
+      'Bourbon Whiskey': 50,
       'Zitronensaft': 25,
-      'Lavendelsirup': 20,
-      'Gurkendestillat alkoholfrei': 40,
-      'Soda': 90
+      'Zuckersirup': 15,
+      'Eiweiß (optional)': 15
     }
   },
-  'garden-fizz': {
-    name: 'Garden Fizz',
+  'espresso-martini': {
+    name: 'Espresso Martini',
     ingredients: {
-      'Apfel-Verjus': 50,
-      'Ingwer': 15,
-      'Basilikumsirup': 15,
-      'Sprudel': 90
+      'Vodka': 40,
+      'Kaffeelikör': 20,
+      'Espresso': 30,
+      'Zuckersirup': 10
+    }
+  },
+  'french-75': {
+    name: 'French 75',
+    ingredients: {
+      'Gin': 30,
+      'Zitronensaft': 15,
+      'Zuckersirup': 10,
+      'Champagner': 60
+    }
+  },
+  'negroni': {
+    name: 'Negroni',
+    ingredients: {
+      'Gin': 30,
+      'Campari': 30,
+      'Roter Vermouth': 30
+    }
+  },
+  'mojito-royal': {
+    name: 'Mojito Royal',
+    ingredients: {
+      'Rum': 40,
+      'Limettensaft': 20,
+      'Zuckersirup': 15,
+      'Champagner': 80
+    }
+  },
+  'virgin-mojito': {
+    name: 'Virgin Mojito',
+    ingredients: {
+      'Limettensaft': 20,
+      'Zuckersirup': 15,
+      'Soda': 100
+    }
+  },
+  'nojito-royale': {
+    name: 'Nojito Royale',
+    ingredients: {
+      'Limettensaft': 20,
+      'Zuckersirup': 15,
+      'Alkoholfreier Prickler': 100
+    }
+  },
+  'champagner-mocktail': {
+    name: 'Champagner‑Mocktail',
+    ingredients: {
+      'Alkoholfreier Schaumwein': 100,
+      'Verjus': 20
+    }
+  },
+  'berry-bliss': {
+    name: 'Berry Bliss',
+    ingredients: {
+      'Beerenpüree': 40,
+      'Zitronensaft': 20,
+      'Kräutersirup': 15,
+      'Soda': 90
     }
   }
 };
-
 const form = document.getElementById('calculator-form');
 const select = document.getElementById('cocktail-select');
 const countInput = document.getElementById('drink-count');
@@ -77,7 +88,7 @@ if (form && select && countInput && resultsList) {
     const servings = parseInt(countInput.value, 10);
 
     if (!recipe || Number.isNaN(servings) || servings < 1) {
-      resultsList.innerHTML = '<li>Bitte gebt eine gültige Anzahl an Drinks ein.</li>';
+      resultsList.innerHTML = '<li>Bitte gebt eine gÃ¼ltige Anzahl an Drinks ein.</li>';
       return;
     }
 
@@ -289,3 +300,4 @@ updateHeaderTone();
     }
   });
 })();
+
