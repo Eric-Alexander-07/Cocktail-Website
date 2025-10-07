@@ -7,567 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg-dark: #060608;
-      --bg-light: #11131a;
-      --accent: #ff9d2e;
-      --accent-soft: rgba(255, 157, 46, 0.15);
-      --text-primary: #f7f7f9;
-      --text-muted: #c7cad1;
-      --card-bg: rgba(21, 24, 33, 0.85);
-      --border: rgba(255, 255, 255, 0.08);
-      font-size: 16px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--text-primary);
-      background: radial-gradient(circle at top, #1b1f2a, #050608 65%);
-      min-height: 100vh;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 999;
-      background: rgba(5, 6, 8, 0.9);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    nav {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem 2rem;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-family: 'Playfair Display', serif;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-primary);
-      font-size: 1rem;
-    }
-
-    .logo-img {
-      height: 40px;
-      width: auto;
-      display: block;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
-      border-radius: 6px;
-      animation: floaty 6s ease-in-out infinite;
-    }
-
-    .cta-button {
-      border: 1px solid var(--accent);
-      color: var(--text-primary);
-      padding: 0.75rem 1.5rem;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s ease;
-      background: linear-gradient(120deg, rgba(255, 157, 46, 0.1), rgba(255, 157, 46, 0));
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-button:hover {
-      background: var(--accent);
-      color: #030305;
-      box-shadow: 0 18px 35px rgba(255, 157, 46, 0.35);
-    }
-
-    .cta-shimmer::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.4) 50%, transparent 80%);
-      transform: translateX(-120%);
-      animation: shimmer 4.5s ease-in-out infinite;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem 4rem;
-    }
-
-    section {
-      margin: 4rem 0;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 3rem;
-      padding-top: 4rem;
-      align-items: center;
-      position: relative;
-      isolation: isolate;
-    }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: -30% -40%;
-      background: radial-gradient(circle at top right, rgba(255, 157, 46, 0.35), transparent 60%);
-      opacity: 0.35;
-      transform: translateY(calc(var(--parallax, 0) * 0.6px));
-      transition: transform 0.15s ease-out;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero p {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      margin-bottom: 2rem;
-      line-height: 1.6;
-    }
-
-    .hero-card {
-      background: var(--card-bg);
-      padding: 2rem;
-      border-radius: 2rem;
-      border: 1px solid var(--border);
-      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(255, 157, 46, 0.35), transparent 60%);
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 1rem;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-    }
-
-    .badge span {
-      display: inline-block;
-      width: 0.6rem;
-      height: 0.6rem;
-      background: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 0 4px rgba(255, 157, 46, 0.15);
-    }
-
-    .highlights {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
-
-    .highlight-card {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 1.5rem;
-      border-radius: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      min-height: 160px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .highlight-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      color: var(--accent);
-    }
-
-    .highlight-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-      gap: 2rem;
-    }
-
-    .section-heading h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 3vw, 2.8rem);
-    }
-
-    .section-heading p {
-      color: var(--text-muted);
-      max-width: 520px;
-      line-height: 1.6;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 2rem;
-      align-items: center;
-    }
-
-    .about-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-    }
-
-    .about-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .about-card p {
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .media {
-      width: 100%;
-      border-radius: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      object-fit: cover;
-    }
-
-    .gallery-grid {
-      margin-top: 1.25rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-    }
-
-    .cocktail-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .cocktail-card {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 1.5rem;
-      padding: 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      transition: transform 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .cocktail-card.is-open {
-      border-color: rgba(255, 157, 46, 0.6);
-      box-shadow: 0 18px 35px rgba(255, 157, 46, 0.18);
-    }
-
-    .cocktail-card:hover {
-      transform: translateY(-6px);
-      border: 1px solid rgba(255, 157, 46, 0.6);
-    }
-
-    .cocktail-card h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-    }
-
-    .cocktail-note {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.5;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 0.3rem 0.8rem;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .ingredient-toggle {
-      align-self: start;
-      padding: 0.45rem 1rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-primary);
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: background 0.2s ease, border 0.2s ease;
-    }
-
-    .ingredient-toggle:hover,
-    .ingredient-toggle:focus-visible {
-      background: rgba(255, 157, 46, 0.15);
-      border-color: rgba(255, 157, 46, 0.6);
-      outline: none;
-    }
-
-    .ingredients {
-      list-style: none;
-      margin-top: 0.35rem;
-      color: var(--text-muted);
-      display: grid;
-      gap: 0.35rem;
-      padding-left: 0;
-      transition: opacity 0.25s ease;
-    }
-
-    .ingredients li {
-      position: relative;
-      padding-left: 1rem;
-    }
-
-    .ingredients li::before {
-      content: '\2022';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-    }
-
-    .ingredients[hidden] {
-      display: none;
-    }
-
-    .menu-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .menu-item {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .menu-item h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-    }
-
-    .menu-item span {
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 0.05em;
-    }
-
-    .calculator {
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 2rem;
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      align-items: start;
-    }
-
-    .calculator form {
-      display: grid;
-      gap: 1rem;
-    }
-
-    label {
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--text-muted);
-    }
-
-    select,
-    input,
-    button {
-      font-family: inherit;
-    }
-
-    select,
-    input {
-      background: rgba(7, 9, 13, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 0.75rem;
-      padding: 0.75rem 1rem;
-      color: var(--text-primary);
-    }
-
-    input:focus,
-    select:focus {
-      outline: 2px solid rgba(255, 157, 46, 0.4);
-    }
-
-    .results {
-      background: rgba(7, 9, 13, 0.7);
-      border-radius: 1.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      padding: 1.5rem;
-      min-height: 220px;
-    }
-
-    .results h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      margin-bottom: 1rem;
-    }
-
-    .results ul {
-      list-style: none;
-      display: grid;
-      gap: 0.65rem;
-    }
-
-    .results li {
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-    }
-
-    .contact {
-      background: linear-gradient(135deg, rgba(255, 157, 46, 0.08), rgba(255, 157, 46, 0));
-      border-radius: 2rem;
-      padding: 2.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    .contact h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.7rem;
-    }
-
-    .contact p {
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
-    .contact a {
-      color: var(--accent);
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 0 2rem;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(18px) scale(0.98);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    .hover-tilt {
-      will-change: transform;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
-
-    @keyframes floaty {
-      0% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-2px);
-      }
-      100% {
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes shimmer {
-      0% {
-        transform: translateX(-120%);
-      }
-      50% {
-        transform: translateX(120%);
-      }
-      100% {
-        transform: translateX(120%);
-      }
-    }
-
-    @media (max-width: 640px) {
-      nav {
-        padding: 1.2rem;
-      }
-
-      main {
-        padding: 0 1.25rem 3rem;
-      }
-
-      .hero {
-        padding-top: 2rem;
-      }
-
-      .section-heading {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
   <header>
     <nav>
       <div class="logo" aria-label="Three Flies Cocktail Collective">
         <img class="logo-img" src="assets/img/logo.png" alt="Three Flies Cocktail Collective Logo" />
-        <span>Three Flies Cocktail Collective</span>
+        <span>Three Flies Cocktails</span>
       </div>
       <a class="cta-button cta-shimmer" href="#kontakt">Anfrage starten</a>
     </nav>
@@ -586,7 +33,7 @@
       <article class="hero-card reveal" aria-label="&Uuml;ber Three Flies">
         <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 1rem;">Three Flies &ndash; Cocktails mit Charakter</h2>
         <p>
-          Wir sind drei Freund:innen mit Liebe zu ma&szlig;geschneiderten Cocktailkonzepten. Inspiriert von unseren ikonischen Fliegen, kombinieren wir elegante Pr&auml;sentation mit einem Augenzwinkern.
+          Wir sind drei Freunde mit Liebe zu ma&szlig;geschneiderten Cocktailkonzepten. Inspiriert von unseren ikonischen Fliegen, kombinieren wir elegante Pr&auml;sentation mit einem Augenzwinkern.
         </p>
         <div class="highlights">
           <div class="highlight-card">
@@ -594,7 +41,7 @@
             <p>Hausgemachte Infusionen, saisonale Botanicals und ausgew&auml;hlte Spirituosen.</p>
           </div>
           <div class="highlight-card">
-            <h3>Full-Service</h3>
+            <h3>Individueller-Service</h3>
             <p>Setup, Personal, Glasware &ndash; ihr entspannt euch, wir k&uuml;mmern uns um den Rest.</p>
           </div>
           <div class="highlight-card">
@@ -603,6 +50,10 @@
           </div>
         </div>
       </article>
+      <div class="scroll-hint" aria-hidden="true">
+        <div class="scroll-hint__icon"></div>
+        <span>Scroll</span>
+      </div>
     </section>
 
     <section id="about" class="reveal">
@@ -627,6 +78,19 @@
       </div>
     </section>
 
+    <section id="events" class="reveal">
+      <div class="section-heading">
+        <h2>Events</h2>
+        <p>Einblicke in vergangene Partys, Pop-Ups und Einsätze.</p>
+      </div>
+      <div class="events-grid" aria-label="Events Galerie">
+        <img class="media" src="assets/img/bar2.jpg" alt="Bar-Setup bei einem Abend-Event" />
+        <img class="media" src="assets/img/cellar.jpg" alt="Mixing Station in einer Location" />
+        <img class="media" src="assets/img/cellar2.jpg" alt="Stimmungsvolles Event mit Bar" />
+        <img class="media" src="assets/img/team.jpg" alt="Teamfoto hinter der Bar" />
+      </div>
+    </section>
+
     <section id="trending" class="reveal">
       <div class="section-heading">
         <h2>Aktuell angesagte Cocktails</h2>
@@ -634,57 +98,69 @@
           Wir kuratieren kontinuierlich Drinks, die eure G&auml;ste begeistern &ndash; von neu interpretierten Klassikern bis zu progressiven Kreationen mit lokalen Zutaten.
         </p>
       </div>
-      <div class="cocktail-grid">
-        <article class="cocktail-card hover-tilt">
-          <span class="tag">Signature</span>
-          <h3>Fly High Martini</h3>
-          <p class="cocktail-note">Dry Martini mit Birnenakzent und salzig-s&uuml;&szlig;em Finish.</p>
-          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
-          <ul class="ingredients" hidden>
-            <li>Gin</li>
-            <li>Wei&szlig;er Vermouth</li>
-            <li>Birnenbrand</li>
-            <li>Honig-Nori-Sirup</li>
-            <li>Zitruszeste</li>
-          </ul>
-        </article>
-        <article class="cocktail-card hover-tilt">
-          <span class="tag">Trend</span>
-          <h3>Smoked Yuzu Paloma</h3>
-          <p class="cocktail-note">Rauchiger Mezcal, frische Yuzu und Grapefruit mit Salzschaum.</p>
-          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
-          <ul class="ingredients" hidden>
-            <li>Mezcal</li>
-            <li>Grapefruitsaft</li>
-            <li>Yuzu-Sirup</li>
-            <li>Yuzu-Soda</li>
-            <li>Salzschaum</li>
-          </ul>
-        </article>
-        <article class="cocktail-card hover-tilt">
-          <span class="tag">Low ABV</span>
-          <h3>Verjus Spritz</h3>
-          <p class="cocktail-note">Leicht, spritzig und elegant mit Riesling-Noten.</p>
-          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
-          <ul class="ingredients" hidden>
-            <li>Verjus</li>
-            <li>Riesling-Reduktion</li>
-            <li>Rosmarin</li>
-            <li>Mineralwasser</li>
-          </ul>
-        </article>
-        <article class="cocktail-card hover-tilt">
-          <span class="tag">Zero Proof</span>
-          <h3>Garden Club</h3>
-          <p class="cocktail-note">Gr&uuml;ne Frische mit Matcha und Zitronenverbene.</p>
-          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
-          <ul class="ingredients" hidden>
-            <li>Gurkendestillat</li>
-            <li>Zitronenverbene</li>
-            <li>Limette</li>
-            <li>Matcha Tonic</li>
-          </ul>
-        </article>
+      <div class="carousel" data-carousel>
+        <button class="carousel-nav carousel-nav--prev" type="button" aria-label="Zur&uuml;ck bl&auml;ttern" data-carousel-prev>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.5 5l-7 7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="carousel-track" data-carousel-track tabindex="0">
+          <article class="cocktail-card hover-tilt">
+            <span class="tag">Signature</span>
+            <h3>Fly High Martini</h3>
+            <p class="cocktail-note">Dry Martini mit Birnenakzent und salzig-s&uuml;&szlig;em Finish.</p>
+            <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+            <ul class="ingredients" hidden>
+              <li>Gin</li>
+              <li>Wei&szlig;er Vermouth</li>
+              <li>Birnenbrand</li>
+              <li>Honig-Nori-Sirup</li>
+              <li>Zitruszeste</li>
+            </ul>
+          </article>
+          <article class="cocktail-card hover-tilt">
+            <span class="tag">Trend</span>
+            <h3>Smoked Yuzu Paloma</h3>
+            <p class="cocktail-note">Rauchiger Mezcal, frische Yuzu und Grapefruit mit Salzschaum.</p>
+            <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+            <ul class="ingredients" hidden>
+              <li>Mezcal</li>
+              <li>Grapefruitsaft</li>
+              <li>Yuzu-Sirup</li>
+              <li>Yuzu-Soda</li>
+              <li>Salzschaum</li>
+            </ul>
+          </article>
+          <article class="cocktail-card hover-tilt">
+            <span class="tag">Low ABV</span>
+            <h3>Verjus Spritz</h3>
+            <p class="cocktail-note">Leicht, spritzig und elegant mit Riesling-Noten.</p>
+            <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+            <ul class="ingredients" hidden>
+              <li>Verjus</li>
+              <li>Riesling-Reduktion</li>
+              <li>Rosmarin</li>
+              <li>Mineralwasser</li>
+            </ul>
+          </article>
+          <article class="cocktail-card hover-tilt">
+            <span class="tag">Zero Proof</span>
+            <h3>Garden Club</h3>
+            <p class="cocktail-note">Gr&uuml;ne Frische mit Matcha und Zitronenverbene.</p>
+            <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+            <ul class="ingredients" hidden>
+              <li>Gurkendestillat</li>
+              <li>Zitronenverbene</li>
+              <li>Limette</li>
+              <li>Matcha Tonic</li>
+            </ul>
+          </article>
+        </div>
+        <button class="carousel-nav carousel-nav--next" type="button" aria-label="Weiter bl&auml;ttern" data-carousel-next>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.5 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
       </div>
     </section>
 
@@ -693,44 +169,56 @@
         <h2>Alkoholfreie Cocktails</h2>
         <p>Vollwertige Drinks ohne Alkohol &ndash; aromatisch, ausgewogen und ebenso liebevoll pr&auml;sentiert.</p>
       </div>
-      <div class="cocktail-grid">
-        <article class="cocktail-card hover-tilt">
-          <span class="tag">Zero Proof</span>
-          <h3>Paloma Verde</h3>
-          <p class="cocktail-note">Grapefruit und Limette treffen auf herb-s&uuml;&szlig;en Shrub.</p>
-          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
-          <ul class="ingredients" hidden>
-            <li>Grapefruit</li>
-            <li>Limette</li>
-            <li>Rosmarin</li>
-            <li>Cranberry-Shrub</li>
-            <li>Soda</li>
-          </ul>
-        </article>
-        <article class="cocktail-card hover-tilt">
-          <span class="tag">Zero Proof</span>
-          <h3>Lavender Collins</h3>
-          <p class="cocktail-note">Florale Leichtigkeit mit Lavendel und Gurkenfrische.</p>
-          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
-          <ul class="ingredients" hidden>
-            <li>Zitronensaft</li>
-            <li>Lavendelsirup</li>
-            <li>Alkoholfreies Gurkendestillat</li>
-            <li>Soda</li>
-          </ul>
-        </article>
-        <article class="cocktail-card hover-tilt">
-          <span class="tag">Zero Proof</span>
-          <h3>Garden Fizz</h3>
-          <p class="cocktail-note">Spritziger Apfel-Verjus mit Ingwer und Basilikum.</p>
-          <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
-          <ul class="ingredients" hidden>
-            <li>Apfel-Verjus</li>
-            <li>Ingwer</li>
-            <li>Basilikum</li>
-            <li>Sprudel</li>
-          </ul>
-        </article>
+      <div class="carousel" data-carousel>
+        <button class="carousel-nav carousel-nav--prev" type="button" aria-label="Zur&uuml;ck bl&auml;ttern" data-carousel-prev>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.5 5l-7 7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="carousel-track" data-carousel-track tabindex="0">
+          <article class="cocktail-card hover-tilt">
+            <span class="tag">Zero Proof</span>
+            <h3>Paloma Verde</h3>
+            <p class="cocktail-note">Grapefruit und Limette treffen auf herb-s&uuml;&szlig;en Shrub.</p>
+            <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+            <ul class="ingredients" hidden>
+              <li>Grapefruit</li>
+              <li>Limette</li>
+              <li>Rosmarin</li>
+              <li>Cranberry-Shrub</li>
+              <li>Soda</li>
+            </ul>
+          </article>
+          <article class="cocktail-card hover-tilt">
+            <span class="tag">Zero Proof</span>
+            <h3>Lavender Collins</h3>
+            <p class="cocktail-note">Florale Leichtigkeit mit Lavendel und Gurkenfrische.</p>
+            <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+            <ul class="ingredients" hidden>
+              <li>Zitronensaft</li>
+              <li>Lavendelsirup</li>
+              <li>Alkoholfreies Gurkendestillat</li>
+              <li>Soda</li>
+            </ul>
+          </article>
+          <article class="cocktail-card hover-tilt">
+            <span class="tag">Zero Proof</span>
+            <h3>Garden Fizz</h3>
+            <p class="cocktail-note">Spritziger Apfel-Verjus mit Ingwer und Basilikum.</p>
+            <button type="button" class="ingredient-toggle" aria-expanded="false">Zutaten anzeigen</button>
+            <ul class="ingredients" hidden>
+              <li>Apfel-Verjus</li>
+              <li>Ingwer</li>
+              <li>Basilikum</li>
+              <li>Sprudel</li>
+            </ul>
+          </article>
+        </div>
+        <button class="carousel-nav carousel-nav--next" type="button" aria-label="Weiter bl&auml;ttern" data-carousel-next>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.5 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
       </div>
     </section>
 
@@ -741,27 +229,59 @@
           Stellt euch euer Wunschmen&uuml; zusammen &ndash; kombiniert Klassiker, Crowd-Pleaser und unsere eigenen Kompositionen. Wir passen jede Karte an euren Anlass an.
         </p>
       </div>
-      <div class="menu-list">
-        <article class="menu-item">
-          <h3>Classics Reimagined</h3>
-          <p>Negroni Bianco, Old Fashioned mit Kakao-Bitters, French 75 mit Bergamotte.</p>
-          <span>Perfekt f&uuml;r: elegante Abende &amp; Dinner-Partys</span>
-        </article>
-        <article class="menu-item">
-          <h3>Playful Crowd Pleasers</h3>
-          <p>Passionfruit Mule, Kokos-Colada on Ice, Espresso-Tonic.</p>
-          <span>Perfekt f&uuml;r: Geburtstage &amp; Sommerfeste</span>
-        </article>
-        <article class="menu-item">
-          <h3>Zero Proof Collection</h3>
-          <p>Paloma Verde, Lavender Collins, Cranberry Shrub Spritz.</p>
-          <span>Perfekt f&uuml;r: gemischte G&auml;stelisten &amp; Daytime Events</span>
-        </article>
-        <article class="menu-item">
-          <h3>Bespoke Experience</h3>
-          <p>Wir entwickeln eine eigene Signature-Story inklusive Glasdesign, Garnish und Bar-Setup.</p>
-          <span>Perfekt f&uuml;r: Markenaktivierungen &amp; Hochzeiten</span>
-        </article>
+      <div class="carousel carousel--grid" data-carousel>
+        <button class="carousel-nav carousel-nav--prev" type="button" aria-label="Zur&uuml;ck bl&auml;ttern" data-carousel-prev>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.5 5l-7 7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="carousel-track" data-carousel-track tabindex="0">
+          <article class="menu-item">
+            <h3>Classics Reimagined</h3>
+            <p>Negroni Bianco, Old Fashioned mit Kakao-Bitters, French 75 mit Bergamotte.</p>
+            <span>Perfekt f&uuml;r: elegante Abende &amp; Dinner-Partys</span>
+          </article>
+          <article class="menu-item">
+            <h3>Classics Reimagined</h3>
+            <p>Negroni Bianco, Old Fashioned mit Kakao-Bitters, French 75 mit Bergamotte.</p>
+            <span>Perfekt f&uuml;r: elegante Abende &amp; Dinner-Partys</span>
+          </article>
+          <article class="menu-item">
+            <h3>Classics Reimagined</h3>
+            <p>Negroni Bianco, Old Fashioned mit Kakao-Bitters, French 75 mit Bergamotte.</p>
+            <span>Perfekt f&uuml;r: elegante Abende &amp; Dinner-Partys</span>
+          </article>
+          <article class="menu-item">
+            <h3>Classics Reimagined</h3>
+            <p>Negroni Bianco, Old Fashioned mit Kakao-Bitters, French 75 mit Bergamotte.</p>
+            <span>Perfekt f&uuml;r: elegante Abende &amp; Dinner-Partys</span>
+          </article>
+          <article class="menu-item">
+            <h3>Classics Reimagined</h3>
+            <p>Negroni Bianco, Old Fashioned mit Kakao-Bitters, French 75 mit Bergamotte.</p>
+            <span>Perfekt f&uuml;r: elegante Abende &amp; Dinner-Partys</span>
+          </article>
+          <article class="menu-item">
+            <h3>Playful Crowd Pleasers</h3>
+            <p>Passionfruit Mule, Kokos-Colada on Ice, Espresso-Tonic.</p>
+            <span>Perfekt f&uuml;r: Geburtstage &amp; Sommerfeste</span>
+          </article>
+          <article class="menu-item">
+            <h3>Zero Proof Collection</h3>
+            <p>Paloma Verde, Lavender Collins, Cranberry Shrub Spritz.</p>
+            <span>Perfekt f&uuml;r: gemischte G&auml;stelisten &amp; Daytime Events</span>
+          </article>
+          <article class="menu-item">
+            <h3>Bespoke Experience</h3>
+            <p>Wir entwickeln eine eigene Signature-Story inklusive Glasdesign, Garnish und Bar-Setup.</p>
+            <span>Perfekt f&uuml;r: Markenaktivierungen &amp; Hochzeiten</span>
+          </article>
+        </div>
+        <button class="carousel-nav carousel-nav--next" type="button" aria-label="Weiter bl&auml;ttern" data-carousel-next>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.5 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
       </div>
     </section>
 
@@ -843,168 +363,7 @@
     &copy; 2024 Three Flies Cocktail Collective &ndash; Crafted in Berlin mit Liebe &amp; Liquid Artistry.
   </footer>
 
-  <script>
-    const recipes = {
-      'fly-high-martini': {
-        name: 'Fly High Martini',
-        ingredients: {
-          'Gin': 40,
-          'Wei&szlig;er Vermouth': 15,
-          'Birnenbrand': 10,
-          'Honig-Nori-Sirup': 10
-        }
-      },
-      'smoked-yuzu-paloma': {
-        name: 'Smoked Yuzu Paloma',
-        ingredients: {
-          'Mezcal': 35,
-          'Grapefruitsaft': 50,
-          'Yuzu-Sirup': 20,
-          'Yuzu-Soda': 70
-        }
-      },
-      'verjus-spritz': {
-        name: 'Verjus Spritz',
-        ingredients: {
-          'Verjus': 60,
-          'Riesling-Reduktion': 30,
-          'Rosmarinsirup': 15,
-          'Mineralwasser': 80
-        }
-      },
-      'garden-club': {
-        name: 'Garden Club',
-        ingredients: {
-          'Gurkendestillat': 40,
-          'Zitronenverbene': 25,
-          'Limette': 20,
-          'Matcha Tonic': 90
-        }
-      },
-      'paloma-verde': {
-        name: 'Paloma Verde',
-        ingredients: {
-          'Grapefruit': 60,
-          'Limette': 20,
-          'Rosmarinsirup': 15,
-          'Cranberry-Shrub': 25,
-          'Soda': 80
-        }
-      },
-      'lavender-collins': {
-        name: 'Lavender Collins',
-        ingredients: {
-          'Zitronensaft': 25,
-          'Lavendelsirup': 20,
-          'Gurkendestillat alkoholfrei': 40,
-          'Soda': 90
-        }
-      },
-      'garden-fizz': {
-        name: 'Garden Fizz',
-        ingredients: {
-          'Apfel-Verjus': 50,
-          'Ingwer': 15,
-          'Basilikumsirup': 15,
-          'Sprudel': 90
-        }
-      }
-    };
-
-    const form = document.getElementById('calculator-form');
-    const select = document.getElementById('cocktail-select');
-    const countInput = document.getElementById('drink-count');
-    const resultsList = document.getElementById('results-list');
-
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const recipe = recipes[select.value];
-      const servings = parseInt(countInput.value, 10);
-
-      if (!recipe || Number.isNaN(servings) || servings < 1) {
-        resultsList.innerHTML = '<li>Bitte gebt eine g&uuml;ltige Anzahl an Drinks ein.</li>';
-        return;
-      }
-
-      const formatter = new Intl.NumberFormat('de-DE');
-      const ingredientsHtml = Object.entries(recipe.ingredients)
-        .map(([ingredient, ml]) => {
-          const total = ml * servings;
-          return `<li><span>${ingredient}</span><span>${formatter.format(total)} ml</span></li>`;
-        })
-        .join('');
-
-      resultsList.innerHTML = ingredientsHtml;
-    });
-
-    // Scroll reveal
-    const revealEls = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    revealEls.forEach((el) => io.observe(el));
-
-    // Subtle card tilt
-    const tiltEls = document.querySelectorAll('.hover-tilt');
-    tiltEls.forEach((el) => {
-      el.addEventListener('mousemove', (e) => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const rx = ((y / rect.height) - 0.5) * -6;
-        const ry = ((x / rect.width) - 0.5) * 6;
-        el.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-      });
-      el.addEventListener('mouseleave', () => {
-        el.style.transform = '';
-      });
-    });
-
-    // Ingredient toggles
-    const toggleButtons = document.querySelectorAll('.ingredient-toggle');
-    toggleButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const list = button.nextElementSibling;
-        if (!list) return;
-        const expanded = button.getAttribute('aria-expanded') === 'true';
-        button.setAttribute('aria-expanded', String(!expanded));
-        button.textContent = expanded ? 'Zutaten anzeigen' : 'Zutaten verbergen';
-        if (expanded) {
-          list.setAttribute('hidden', '');
-        } else {
-          list.removeAttribute('hidden');
-        }
-        const card = button.closest('.cocktail-card');
-        if (card) {
-          card.classList.toggle('is-open', !expanded);
-        }
-      });
-    });
-
-    // Hero parallax
-    const heroSection = document.getElementById('hero');
-    let ticking = false;
-
-    const updateParallax = () => {
-      if (!heroSection) return;
-      const offset = window.scrollY * 0.08;
-      heroSection.style.setProperty('--parallax', offset.toFixed(2));
-      ticking = false;
-    };
-
-    window.addEventListener('scroll', () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateParallax);
-        ticking = true;
-      }
-    });
-
-    updateParallax();
-  </script>
+  <script src="assets/js/scripts.js" defer></script>
 </body>
 </html>
+

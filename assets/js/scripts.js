@@ -1,0 +1,215 @@
+const recipes = {
+  'fly-high-martini': {
+    name: 'Fly High Martini',
+    ingredients: {
+      'Gin': 40,
+      'Weißer Vermouth': 15,
+      'Birnenbrand': 10,
+      'Honig-Nori-Sirup': 10
+    }
+  },
+  'smoked-yuzu-paloma': {
+    name: 'Smoked Yuzu Paloma',
+    ingredients: {
+      'Mezcal': 35,
+      'Grapefruitsaft': 50,
+      'Yuzu-Sirup': 20,
+      'Yuzu-Soda': 70
+    }
+  },
+  'verjus-spritz': {
+    name: 'Verjus Spritz',
+    ingredients: {
+      'Verjus': 60,
+      'Riesling-Reduktion': 30,
+      'Rosmarinsirup': 15,
+      'Mineralwasser': 80
+    }
+  },
+  'garden-club': {
+    name: 'Garden Club',
+    ingredients: {
+      'Gurkendestillat': 40,
+      'Zitronenverbene': 25,
+      'Limette': 20,
+      'Matcha Tonic': 90
+    }
+  },
+  'paloma-verde': {
+    name: 'Paloma Verde',
+    ingredients: {
+      'Grapefruit': 60,
+      'Limette': 20,
+      'Rosmarinsirup': 15,
+      'Cranberry-Shrub': 25,
+      'Soda': 80
+    }
+  },
+  'lavender-collins': {
+    name: 'Lavender Collins',
+    ingredients: {
+      'Zitronensaft': 25,
+      'Lavendelsirup': 20,
+      'Gurkendestillat alkoholfrei': 40,
+      'Soda': 90
+    }
+  },
+  'garden-fizz': {
+    name: 'Garden Fizz',
+    ingredients: {
+      'Apfel-Verjus': 50,
+      'Ingwer': 15,
+      'Basilikumsirup': 15,
+      'Sprudel': 90
+    }
+  }
+};
+
+const form = document.getElementById('calculator-form');
+const select = document.getElementById('cocktail-select');
+const countInput = document.getElementById('drink-count');
+const resultsList = document.getElementById('results-list');
+
+if (form && select && countInput && resultsList) {
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const recipe = recipes[select.value];
+    const servings = parseInt(countInput.value, 10);
+
+    if (!recipe || Number.isNaN(servings) || servings < 1) {
+      resultsList.innerHTML = '<li>Bitte gebt eine gültige Anzahl an Drinks ein.</li>';
+      return;
+    }
+
+    const formatter = new Intl.NumberFormat('de-DE');
+    const ingredientsHtml = Object.entries(recipe.ingredients)
+      .map(([ingredient, ml]) => {
+        const total = ml * servings;
+        return `<li><span>${ingredient}</span><span>${formatter.format(total)} ml</span></li>`;
+      })
+      .join('');
+
+    resultsList.innerHTML = ingredientsHtml;
+  });
+}
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach((el) => io.observe(el));
+
+// Subtle card tilt without blur
+const tiltEls = document.querySelectorAll('.hover-tilt');
+tiltEls.forEach((el) => {
+  el.addEventListener('mousemove', (event) => {
+    const rect = el.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    const maxTilt = 4;
+    const tiltX = ((y / rect.height) - 0.5) * -maxTilt;
+    const tiltY = ((x / rect.width) - 0.5) * maxTilt;
+    el.style.setProperty('--tiltX', `${tiltX.toFixed(2)}deg`);
+    el.style.setProperty('--tiltY', `${tiltY.toFixed(2)}deg`);
+  });
+
+  el.addEventListener('mouseleave', () => {
+    el.style.removeProperty('--tiltX');
+    el.style.removeProperty('--tiltY');
+  });
+});
+
+// Ingredient toggles
+const toggleButtons = document.querySelectorAll('.ingredient-toggle');
+toggleButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const list = button.nextElementSibling;
+    if (!list) return;
+    const expanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', String(!expanded));
+    button.textContent = expanded ? 'Zutaten anzeigen' : 'Zutaten verbergen';
+    if (expanded) {
+      list.setAttribute('hidden', '');
+    } else {
+      list.removeAttribute('hidden');
+    }
+    const card = button.closest('.cocktail-card');
+    if (card) {
+      card.classList.toggle('is-open', !expanded);
+    }
+  });
+});
+
+// Carousel controls
+const carousels = document.querySelectorAll('[data-carousel]');
+
+const getScrollAmount = (track) => Math.min(track.clientWidth * 0.85, 420);
+
+const setupCarousel = (carousel) => {
+  const track = carousel.querySelector('[data-carousel-track]');
+  if (!track) return;
+  if (!track.hasAttribute('tabindex')) {
+    track.setAttribute('tabindex', '0');
+  }
+
+  const prev = carousel.querySelector('[data-carousel-prev]');
+  const next = carousel.querySelector('[data-carousel-next]');
+
+  const updateNavState = () => {
+    const maxScroll = track.scrollWidth - track.clientWidth - 1;
+    const atStart = track.scrollLeft <= 1;
+    const atEnd = track.scrollLeft >= maxScroll;
+    if (prev) prev.disabled = atStart;
+    if (next) next.disabled = atEnd;
+    carousel.classList.toggle('no-nav', track.scrollWidth <= track.clientWidth + 1);
+  };
+
+  const handleScroll = (direction) => {
+    track.scrollBy({
+      left: direction * getScrollAmount(track),
+      behavior: 'smooth'
+    });
+  };
+
+  prev?.addEventListener('click', () => handleScroll(-1));
+  next?.addEventListener('click', () => handleScroll(1));
+
+  track.addEventListener('scroll', () => updateNavState(), { passive: true });
+
+  if ('ResizeObserver' in window) {
+    const ro = new ResizeObserver(updateNavState);
+    ro.observe(track);
+  } else {
+    window.addEventListener('resize', updateNavState);
+  }
+
+  updateNavState();
+};
+
+carousels.forEach(setupCarousel);
+
+// Hero parallax
+const heroSection = document.getElementById('hero');
+let ticking = false;
+
+const updateParallax = () => {
+  if (!heroSection) return;
+  const offset = window.scrollY * 0.08;
+  heroSection.style.setProperty('--parallax', offset.toFixed(2));
+  ticking = false;
+};
+
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(updateParallax);
+    ticking = true;
+  }
+});
+
+updateParallax();
