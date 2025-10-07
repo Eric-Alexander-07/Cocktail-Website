@@ -74,7 +74,7 @@
 
       <div class="gallery-grid" aria-label="Impressionen">
         <img class="media reveal" src="assets/img/bar.jpg" alt="Barkeeper an der mobilen Bar mit Drink" />
-        <img class="media reveal" src="assets/img/team2.jpg" alt="Drei Teammitglieder in eleganter Kleidung" />
+        <img class="media reveal" src="assets/img/logo.png" alt="Drei Teammitglieder in eleganter Kleidung" />
       </div>
     </section>
 
@@ -87,7 +87,7 @@
         <img class="media" src="assets/img/bar2.jpg" alt="Bar-Setup bei einem Abend-Event" />
         <img class="media" src="assets/img/cellar.jpg" alt="Mixing Station in einer Location" />
         <img class="media" src="assets/img/cellar2.jpg" alt="Stimmungsvolles Event mit Bar" />
-        <img class="media" src="assets/img/team.jpg" alt="Teamfoto hinter der Bar" />
+        <img class="media" src="assets/img/team2.jpg" alt="Teamfoto hinter der Bar" />
       </div>
     </section>
 
@@ -328,19 +328,19 @@
       </div>
       <details>
         <summary>Welche Leistungen bringt ihr mit?</summary>
-        <p>Bar-Setup, professionelle Ausstattung, Eis, Glasware, Zutaten und Personal. Optional &uuml;bernehmen wir auch Konzepterstellung, Deko und passende Musikempfehlungen.</p>
+        <div class="answer"><p>Bar-Setup, professionelle Ausstattung, Eis, Glasware, Zutaten und Personal. Optional &uuml;bernehmen wir auch Konzepterstellung, Deko und passende Musikempfehlungen.</p></div>
       </details>
       <details>
         <summary>K&ouml;nnt ihr alkoholfreie Optionen anbieten?</summary>
-        <p>Ja, wir haben eine Zero-Proof-Auswahl mit eigenst&auml;ndigen, aromatischen Drinks &ndash; nicht nur &bdquo;ohne Alkohol&ldquo;, sondern mit Charakter.</p>
+        <div class="answer"><p>Ja, wir haben eine Zero-Proof-Auswahl mit eigenst&auml;ndigen, aromatischen Drinks &ndash; nicht nur &bdquo;ohne Alkohol&ldquo;, sondern mit Charakter.</p></div>
       </details>
       <details>
         <summary>Wie kalkuliert ihr die Mengen?</summary>
-        <p>Unser Rechner gibt erste Richtwerte. Erfahrungsgem&auml;&szlig; planen wir mit drei bis f&uuml;nf Drinks pro Person, je nach Eventdauer.</p>
+        <div class="answer"><p>Unser Rechner gibt erste Richtwerte. Erfahrungsgem&auml;&szlig; planen wir mit drei bis f&uuml;nf Drinks pro Person, je nach Eventdauer.</p></div>
       </details>
       <details>
         <summary>In welchem Gebiet seid ihr unterwegs?</summary>
-        <p>Wir kommen aus Obernburg am Main und sind mobil im Kreis Aschaffenburg/Miltenberg unterwegs. Teilt uns Datum, Ort und G&auml;stezahl mit &ndash; wir pr&uuml;fen Verf&uuml;gbarkeit und erstellen ein Angebot.</p>
+        <div class="answer"><p>Wir kommen aus Obernburg am Main und sind mobil im Kreis Aschaffenburg/Miltenberg unterwegs. Teilt uns Datum, Ort und G&auml;stezahl mit &ndash; wir pr&uuml;fen Verf&uuml;gbarkeit und erstellen ein Angebot.</p></div>
       </details>
     </section>
 
@@ -363,7 +363,12 @@
     &copy; 2024 Three Flies Cocktail Collective &ndash; Crafted in Berlin mit Liebe &amp; Liquid Artistry.
   </footer>
 
+  <!-- Lightbox root -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox__close" type="button" aria-label="Schlie&szlig;en">&times;</button>
+    <img class="lightbox__img" alt="Vergr&ouml;&szlig;ertes Bild" />
+  </div>
+
   <script src="assets/js/scripts.js" defer></script>
 </body>
 </html>
-

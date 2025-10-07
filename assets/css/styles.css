@@ -20,7 +20,9 @@
 body {
   font-family: 'Montserrat', sans-serif;
   color: var(--text-primary);
-  background: radial-gradient(circle at top, #1b1f2a, #080606 65%);
+  /* Subtle base gradient with safe fallback */
+  background: radial-gradient(circle at 75% -10%, rgba(255, 157, 46, 0.08), rgba(0, 0, 0, 0) 55%),
+    linear-gradient(180deg, #12151c 0%, #090a0f 65%);
   min-height: 100vh;
 }
 
@@ -34,9 +36,17 @@ header {
   position: sticky;
   top: 0;
   z-index: 999;
-  background: rgba(5, 6, 8, 0.9);
+  /* Softer at page start; darkens on scroll via .is-scrolled */
+  background: linear-gradient(180deg, rgba(8, 9, 12, 0.55), rgba(8, 9, 12, 0.35));
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
+  transition: background 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+header.is-scrolled {
+  background: rgba(5, 6, 8, 0.9);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 nav {
@@ -129,10 +139,14 @@ section {
 .hero::before {
   content: '';
   position: absolute;
-  inset: -30% -40%;
-  background: radial-gradient(circle at top right, rgba(255, 157, 46, 0.35), transparent 60%);
+  /* Make the glow full-bleed across the viewport to avoid a visible edge on the right */
+  top: -30%;
+  left: 50%;
+  width: 150vw;
+  height: 160vh;
+  transform: translate(-50%, calc(var(--parallax, 0) * 0.6px));
+  background: radial-gradient(circle at 80% 12%, rgba(255, 157, 46, 0.32), transparent 62%);
   opacity: 0.35;
-  transform: translateY(calc(var(--parallax, 0) * 0.6px));
   transition: transform 0.15s ease-out;
   pointer-events: none;
   z-index: -1;
@@ -141,11 +155,13 @@ section {
 .hero::after {
   content: '';
   position: absolute;
+  /* Aurora accent extended to viewport width to remove any right-side gap */
   top: -25%;
-  right: -35%;
-  width: clamp(380px, 60vw, 720px);
-  height: clamp(380px, 60vw, 720px);
-  background: radial-gradient(circle at 30% 30%, rgba(255, 157, 46, 0.65), transparent 55%);
+  left: 50%;
+  width: min(1200px, 95vw);
+  height: min(1200px, 95vw);
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 157, 46, 0.6), transparent 56%);
   filter: blur(30px);
   opacity: 0.55;
   mix-blend-mode: screen;
@@ -348,6 +364,16 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.07);
   object-fit: cover;
   display: block;
+  transition: transform 200ms ease, box-shadow 220ms ease, border-color 220ms ease, filter 220ms ease;
+  cursor: zoom-in;
+}
+
+.media:hover,
+.media:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255, 157, 46, 0.6);
+  box-shadow: 0 14px 28px rgba(255, 157, 46, 0.16);
+  outline: none;
 }
 
 .about-card:hover {
@@ -396,6 +422,115 @@ section {
 .carousel::after {
   right: 0;
   background: linear-gradient(270deg, var(--bg-dark), rgba(6, 6, 8, 0));
+}
+
+/* FAQ styling */
+.faq details {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1rem;
+  padding: 0.25rem 0.85rem;
+  margin: 0.75rem 0;
+  transition: border-color 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+
+.faq details[open] {
+  border-color: rgba(255, 157, 46, 0.4);
+  box-shadow: 0 12px 28px rgba(255, 157, 46, 0.12);
+  background: linear-gradient(135deg, rgba(255, 157, 46, 0.06), rgba(255, 255, 255, 0.02));
+}
+
+.faq summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.9rem 0.25rem;
+  position: relative;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.faq summary::-webkit-details-marker { display: none; }
+
+.faq summary::before {
+  content: '';
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 6px rgba(255, 157, 46, 0.12);
+}
+
+.faq summary::after {
+  content: '';
+  margin-left: auto;
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 220ms ease;
+}
+
+.faq details[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq .answer {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  color: var(--text-muted);
+  line-height: 1.6;
+  transition: max-height 300ms ease, opacity 220ms ease, transform 220ms ease;
+}
+
+.faq details[open] .answer {
+  max-height: var(--answer-max, 400px);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Lightbox */
+.lightbox[hidden] { display: none; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 6, 8, 0.8);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.lightbox.is-open { opacity: 1; }
+
+.lightbox__img {
+  max-width: min(92vw, 1200px);
+  max-height: 85vh;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(8, 9, 12, 0.6);
+  color: var(--text-primary);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
 }
 
 .carousel-track {

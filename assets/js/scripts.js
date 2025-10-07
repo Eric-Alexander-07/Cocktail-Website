@@ -213,3 +213,79 @@ window.addEventListener('scroll', () => {
 });
 
 updateParallax();
+
+// Header background: soften at top, darken on scroll
+const headerEl = document.querySelector('header');
+const updateHeaderTone = () => {
+  if (!headerEl) return;
+  const scrolled = window.scrollY > 16;
+  headerEl.classList.toggle('is-scrolled', scrolled);
+};
+window.addEventListener('scroll', updateHeaderTone, { passive: true });
+updateHeaderTone();
+
+// Lightbox for images with class .media
+(() => {
+  const images = Array.from(document.querySelectorAll('img.media'));
+  const lightbox = document.getElementById('lightbox');
+  if (!images.length || !lightbox) return;
+  const imgEl = lightbox.querySelector('.lightbox__img');
+  const closeBtn = lightbox.querySelector('.lightbox__close');
+
+  const open = (src, alt) => {
+    imgEl.src = src;
+    imgEl.alt = alt || '';
+    lightbox.hidden = false;
+    // Force a reflow so the transition plays when class is added
+    // eslint-disable-next-line no-unused-expressions
+    lightbox.offsetHeight; 
+    lightbox.classList.add('is-open');
+    document.documentElement.style.overflow = 'hidden';
+  };
+  const close = () => {
+    lightbox.classList.remove('is-open');
+    document.documentElement.style.overflow = '';
+    setTimeout(() => { lightbox.hidden = true; imgEl.removeAttribute('src'); }, 180);
+  };
+
+  images.forEach((img) => {
+    img.addEventListener('click', () => open(img.currentSrc || img.src, img.alt));
+    img.addEventListener('keydown', (e) => { if (e.key === 'Enter') open(img.currentSrc || img.src, img.alt); });
+    img.setAttribute('tabindex', '0');
+  });
+
+  closeBtn?.addEventListener('click', close);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) close(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lightbox.hidden) close(); });
+})();
+
+// Animated FAQ height for smoother open/close
+(() => {
+  const detailsEls = document.querySelectorAll('.faq details');
+  if (!detailsEls.length) return;
+
+  detailsEls.forEach((d) => {
+    const answer = d.querySelector('.answer');
+    if (!answer) return;
+
+    const setMax = () => {
+      const h = answer.scrollHeight;
+      d.style.setProperty('--answer-max', `${h}px`);
+    };
+
+    // Set once for correct height on load and on open
+    if (d.open) setMax();
+
+    d.addEventListener('toggle', () => {
+      if (d.open) setMax();
+    });
+
+    // Recalculate on viewport changes
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(setMax);
+      ro.observe(answer);
+    } else {
+      window.addEventListener('resize', setMax);
+    }
+  });
+})();
