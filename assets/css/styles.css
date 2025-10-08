@@ -997,10 +997,17 @@ footer {
   flex-shrink: 0;
   padding: 0.35rem 1rem;
   animation: marquee-scroll var(--marquee-speed) linear infinite;
+  /* Start paused to avoid out-of-sync clone on load; JS adds .is-ready */
+  animation-play-state: paused;
 }
 
 .feedback-marquee.marquee--ltr .marquee__content {
   animation-direction: reverse; /* von links nach rechts */
+}
+
+/* Enable animation only after JS cloning marks container ready */
+.feedback-marquee.is-ready .marquee__content {
+  animation-play-state: running;
 }
 
 .feedback-marquee .marquee__item {

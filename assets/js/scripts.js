@@ -241,10 +241,20 @@ updateHeaderTone();
 
 // Feedback marquee: duplicate content for seamless loop
 (() => {
-  const marquee = document.querySelector('#feedback [data-marquee]');
-  if (!marquee) return;
+  const container = document.getElementById('feedback');
+  const marquee = container?.querySelector('[data-marquee]');
+  if (!container || !marquee) return;
+
+  // Clone the content so two identical rows can scroll seamlessly side-by-side
   const clone = marquee.cloneNode(true);
   clone.setAttribute('aria-hidden', 'true');
   marquee.parentElement.appendChild(clone);
-})();
 
+  // Wait a couple animation frames so layout can settle, then start animation.
+  // This ensures both rows begin in sync and prevents initial overlap on mobile.
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      container.classList.add('is-ready');
+    });
+  });
+})();
