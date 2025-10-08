@@ -1,81 +1,5 @@
-﻿const recipes = {
-  'whiskey-sour': {
-    name: 'Whiskey Sour',
-    ingredients: {
-      'Bourbon Whiskey': 50,
-      'Zitronensaft': 25,
-      'Zuckersirup': 15,
-      'Eiweiß (optional)': 15
-    }
-  },
-  'espresso-martini': {
-    name: 'Espresso Martini',
-    ingredients: {
-      'Vodka': 40,
-      'Kaffeelikör': 20,
-      'Espresso': 30,
-      'Zuckersirup': 10
-    }
-  },
-  'french-75': {
-    name: 'French 75',
-    ingredients: {
-      'Gin': 30,
-      'Zitronensaft': 15,
-      'Zuckersirup': 10,
-      'Champagner': 60
-    }
-  },
-  'negroni': {
-    name: 'Negroni',
-    ingredients: {
-      'Gin': 30,
-      'Campari': 30,
-      'Roter Vermouth': 30
-    }
-  },
-  'mojito-royal': {
-    name: 'Mojito Royal',
-    ingredients: {
-      'Rum': 40,
-      'Limettensaft': 20,
-      'Zuckersirup': 15,
-      'Champagner': 80
-    }
-  },
-  'virgin-mojito': {
-    name: 'Virgin Mojito',
-    ingredients: {
-      'Limettensaft': 20,
-      'Zuckersirup': 15,
-      'Soda': 100
-    }
-  },
-  'nojito-royale': {
-    name: 'Nojito Royale',
-    ingredients: {
-      'Limettensaft': 20,
-      'Zuckersirup': 15,
-      'Alkoholfreier Prickler': 100
-    }
-  },
-  'champagner-mocktail': {
-    name: 'Champagner‑Mocktail',
-    ingredients: {
-      'Alkoholfreier Schaumwein': 100,
-      'Verjus': 20
-    }
-  },
-  'berry-bliss': {
-    name: 'Berry Bliss',
-    ingredients: {
-      'Beerenpüree': 40,
-      'Zitronensaft': 20,
-      'Kräutersirup': 15,
-      'Soda': 90
-    }
-  }
-};
+/* Recipes have been moved to assets/js/recipes-ext.js */
+
 const form = document.getElementById('calculator-form');
 const select = document.getElementById('cocktail-select');
 const countInput = document.getElementById('drink-count');
@@ -84,11 +8,11 @@ const resultsList = document.getElementById('results-list');
 if (form && select && countInput && resultsList) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
-    const recipe = recipes[select.value];
+    const recipe = (window.recipes || {})[select.value];
     const servings = parseInt(countInput.value, 10);
 
     if (!recipe || Number.isNaN(servings) || servings < 1) {
-      resultsList.innerHTML = '<li>Bitte gebt eine gÃ¼ltige Anzahl an Drinks ein.</li>';
+      resultsList.innerHTML = '<li>Bitte gebt eine gültige Anzahl an Drinks ein.</li>';
       return;
     }
 
@@ -270,7 +194,7 @@ updateHeaderTone();
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !lightbox.hidden) close(); });
 })();
 
-// Brand logo click → smooth scroll to page top
+// Brand logo click – smooth scroll to page top
 (() => {
   const brand = document.querySelector('nav .logo');
   if (!brand) return;
