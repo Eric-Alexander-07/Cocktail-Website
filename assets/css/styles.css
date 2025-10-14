@@ -470,6 +470,7 @@ section {
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 6px rgba(255, 157, 46, 0.12);
+  transition: transform 320ms ease, box-shadow 320ms ease;
 }
 
 .faq summary::after {
@@ -491,16 +492,37 @@ section {
   overflow: hidden;
   max-height: 0;
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateY(-8px);
   color: var(--text-muted);
   line-height: 1.6;
-  transition: max-height 300ms ease, opacity 220ms ease, transform 220ms ease;
+  padding: 0 0.35rem;
+  transition:
+    max-height 420ms cubic-bezier(0.28, 0.84, 0.32, 1),
+    opacity 260ms ease,
+    transform 360ms cubic-bezier(0.28, 0.84, 0.32, 1),
+    padding 280ms ease;
 }
 
 .faq details[open] .answer {
-  max-height: var(--answer-max, 400px);
+  max-height: none;
   opacity: 1;
   transform: translateY(0);
+  padding: 0.65rem 0.35rem 0.95rem;
+}
+
+.faq details[open] summary::before {
+  transform: scale(1.08);
+  box-shadow: 0 0 0 9px rgba(255, 157, 46, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq .answer {
+    transition: none;
+  }
+
+  .faq details[open] .answer {
+    max-height: none;
+  }
 }
 
 /* Lightbox */
@@ -839,10 +861,193 @@ select:focus {
 }
 
 footer {
-  text-align: center;
-  padding: 3rem 0 2rem;
+  border-top: 1px solid var(--border);
+  background: rgba(6, 6, 8, 0.92);
+  padding: 3rem 1.5rem 2.5rem;
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+}
+
+footer .footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  align-items: center;
+  text-align: center;
+}
+
+footer .footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-primary);
+}
+
+footer .footer-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+footer .footer-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+footer .footer-brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+footer .footer-tagline {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+footer .footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  font-weight: 600;
+}
+
+footer .footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+footer .footer-links a:hover,
+footer .footer-links a:focus-visible {
+  color: var(--accent);
+  outline: none;
+}
+
+footer .footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+@media (min-width: 720px) {
+  footer .footer-inner {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    text-align: left;
+  }
+
+  footer .footer-brand {
+    align-items: flex-start;
+  }
+
+  footer .footer-brand-copy {
+    text-align: left;
+  }
+
+  footer .footer-meta {
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+.legal-page main {
+  padding: 6rem 0 4.5rem;
+}
+
+.legal-section {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.legal-heading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.legal-kicker {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.legal-heading h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.1rem, 4vw, 2.8rem);
+}
+
+.legal-lead {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.legal-card {
+  background: rgba(9, 10, 15, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.legal-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+}
+
+.legal-card p {
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.legal-card ul {
+  list-style: disc;
+  margin-left: 1.5rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.legal-card li + li {
+  margin-top: 0.35rem;
+}
+
+.legal-card a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.legal-card a:hover,
+.legal-card a:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.legal-card strong {
+  color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+  .legal-card {
+    padding: 1.5rem 1.35rem;
+  }
 }
 
 .reveal {
@@ -951,11 +1156,12 @@ footer {
   }
 
   .carousel-track {
-    grid-auto-columns: 80%;
+    grid-auto-columns: minmax(230px, 80%);
   }
 
   .carousel--grid .carousel-track {
-    grid-template-rows: none;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    gap: 1.35rem;
   }
 
   .scroll-hint {
@@ -999,10 +1205,6 @@ footer {
   animation: marquee-scroll var(--marquee-speed) linear infinite;
   /* Start paused to avoid out-of-sync clone on load; JS adds .is-ready */
   animation-play-state: paused;
-}
-
-.feedback-marquee.marquee--ltr .marquee__content {
-  animation-direction: reverse; /* von links nach rechts */
 }
 
 /* Enable animation only after JS cloning marks container ready */

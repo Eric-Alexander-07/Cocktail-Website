@@ -198,44 +198,89 @@ updateHeaderTone();
 (() => {
   const brand = document.querySelector('nav .logo');
   if (!brand) return;
-  const toTop = (e) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-  brand.addEventListener('click', toTop);
-  brand.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') toTop(e);
-  });
+  if (brand.getAttribute('href') === '#') {
+    const toTop = (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    brand.addEventListener('click', toTop);
+    brand.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') toTop(e);
+    });
+  }
 })();
 
-// Animated FAQ height for smoother open/close
+// Animated FAQ height with CSS var fallback
 (() => {
   const detailsEls = document.querySelectorAll('.faq details');
   if (!detailsEls.length) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
 
-  detailsEls.forEach((d) => {
-    const answer = d.querySelector('.answer');
+  detailsEls.forEach((detail) => {
+    const answer = detail.querySelector('.answer');
     if (!answer) return;
+    const summary = detail.querySelector('summary');
 
-    const setMax = () => {
-      const h = answer.scrollHeight;
-      d.style.setProperty('--answer-max', `${h}px`);
+    const prepareCollapse = () => {
+      if (!detail.open) return;
+      answer.style.maxHeight = `${answer.scrollHeight}px`;
     };
 
-    // Set once for correct height on load and on open
-    if (d.open) setMax();
-
-    d.addEventListener('toggle', () => {
-      if (d.open) setMax();
+    summary?.addEventListener('pointerdown', prepareCollapse);
+    summary?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') prepareCollapse();
     });
 
-    // Recalculate on viewport changes
-    if ('ResizeObserver' in window) {
-      const ro = new ResizeObserver(setMax);
-      ro.observe(answer);
+    const open = () => {
+      answer.style.maxHeight = `${answer.scrollHeight}px`;
+    };
+
+    const close = () => {
+      // ensure we start from the full height for a smooth collapse
+      const start = answer.scrollHeight;
+      answer.style.maxHeight = `${start}px`;
+      requestAnimationFrame(() => {
+        answer.style.maxHeight = '0px';
+      });
+    };
+
+    if (detail.open) {
+      answer.style.maxHeight = 'none';
     } else {
-      window.addEventListener('resize', setMax);
+      answer.style.maxHeight = '0px';
     }
+
+    detail.addEventListener('toggle', () => {
+      if (detail.open) {
+        // restart from zero to ensure animation plays
+        answer.style.maxHeight = '0px';
+        requestAnimationFrame(open);
+      } else {
+        close();
+      }
+    });
+
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(() => {
+        if (detail.open) {
+          open();
+          requestAnimationFrame(() => {
+            if (detail.open) answer.style.maxHeight = 'none';
+          });
+        }
+      });
+      ro.observe(answer);
+    }
+
+    answer.addEventListener('transitionend', (event) => {
+      if (event.propertyName !== 'max-height') return;
+      if (detail.open) {
+        answer.style.maxHeight = 'none';
+      } else {
+        answer.style.removeProperty('max-height');
+      }
+    });
   });
 })();
 
